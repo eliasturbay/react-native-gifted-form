@@ -234,12 +234,29 @@ module.exports = React.createClass({
                   return this.props.transformValue(values[this.props.displayValue]);
                 } else {
                   if (Array.isArray(values[this.props.displayValue])) {
-                    if(this.props.data) {
-                      return values[this.props.displayValue].map((key) => {
-                        return this.props.data.find((itm)=>itm.key === key).title;
-                      }).join(', ');
+                    var value = values[this.props.displayValue].join(', ');
+
+                    // extract the title from the SelectWidget
+                    if (value !== 'undefined' && this.props.children !== 'undefined') {
+                      // find the select
+                      for (var s in this.props.children) {
+                        if (this.props.children[s].props.type == 'SelectWidget') {
+                          if (this.props.children[s].props.children !== 'undefined') {
+                            // find the associated option
+                            for (var o in this.props.children[s].props.children) {
+                              if (this.props.children[s].props.children[o].props.value === value) {
+                                // if the title is set, use that
+                                if (this.props.children[s].props.children[o].props.title !== 'undefined') {
+                                  return this.props.children[s].props.children[o].props.title;
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
-                    return values[this.props.displayValue].join(', ');
+                    return value;
+                    
                   } else if (values[this.props.displayValue] instanceof Date) {
                     return moment(values[this.props.displayValue]).calendar(null, {
                       sameDay: '[Today]',
