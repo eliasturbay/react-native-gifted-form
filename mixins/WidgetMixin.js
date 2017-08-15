@@ -42,10 +42,26 @@ module.exports = {
       validationImage: true,
       openModal: null,
       navigator: null,
-      onFocus: () => {},
-      onBlur: () => {},
+      onFocus: () => {
+      },
+      onBlur: () => {
+      },
       validateOnEmpty: false,
     };
+  },
+
+  _onResetViewValues(){
+    this.setState({
+      value: null
+    });
+  },
+
+  componentWillMount(){
+    GiftedFormManager.on(this.props.formName, 'resetViewValues', this._onResetViewValues);
+  },
+
+  componentWillUnmount(){
+    GiftedFormManager.off(this.props.formName, 'resetViewValues', this._onResetViewValues);
   },
 
   componentDidMount() {
@@ -121,7 +137,10 @@ module.exports = {
     var validators = GiftedFormManager.getValidators(this.props.formName, this.props.name);
     if (Array.isArray(validators.validate)) {
       if (validators.validate.length > 0) {
-        var validation = GiftedFormManager.validateAndParseOne(this.props.name, value, {validate: validators.validate, title: validators.title});
+        var validation = GiftedFormManager.validateAndParseOne(this.props.name, value, {
+          validate: validators.validate,
+          title: validators.title
+        });
         if (validation.isValid === false) {
           this.setState({
             validationErrorMessage: validation.message
@@ -215,7 +234,7 @@ module.exports = {
     const shouldShowValidationImage = this.props.validationImage === true;
 
     if (hasValue && hasImageProp && !isOptionWidget && shouldShowValidationImage && toValidate) {
-      const imageSrc = hasValidationErrors ? require('../icons/delete_sign.png'):require('../icons/checkmark.png');
+      const imageSrc = hasValidationErrors ? require('../icons/delete_sign.png') : require('../icons/checkmark.png');
 
       return (
         <Image
@@ -226,7 +245,7 @@ module.exports = {
       );
     } else if (hasImageProp) {
       if (typeof this.props.image === 'object') {
-        return(this.props.image);
+        return (this.props.image);
       }
 
       return (
