@@ -29,7 +29,7 @@
     "moment": "~2.18.1",
     "react-native-button": "~1.8.2",
     "react-native-gifted-spinner": "~0.1.0",
-    "react-native-google-places-autocomplete": "git://github.com/BunHouth/react-native-google-places-autocomplete.git#master",
+    "react-native-google-places-autocomplete": "git://github.com/eliasturbay/react-native-google-places-autocomplete.git#master",
     "react-timer-mixin": "~0.13.3",
     "validator": "~7.1.0"
   }
