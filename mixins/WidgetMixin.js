@@ -51,8 +51,9 @@ module.exports = {
   },
 
   _onResetViewValues(){
+    const isSwitchWidget = this.props.type === 'SwitchWidget';
     this.setState({
-      value: null
+      value: isSwitchWidget ? false : null
     });
   },
 
