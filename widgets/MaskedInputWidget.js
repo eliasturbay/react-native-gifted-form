@@ -56,7 +56,7 @@ module.exports = createReactClass({
           </View>
           
           <TextInputMask
-            ref='input'
+            ref='maskedInput'
             style={this.getStyle(['textInput'])}
           
             {...this.props}
@@ -79,7 +79,7 @@ module.exports = createReactClass({
           {this._renderImage()}
           {this._renderTitle()}
           <TextInputMask
-            ref='input'
+            ref='maskedInput'
             style={this.getStyle(['textInputInline'])}
 
             {...this.props}
@@ -87,7 +87,7 @@ module.exports = createReactClass({
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             
-            onChangeText={this._onChange}
+            onChangeText={this.onChangeText}
             value={this.state.value}
           />
         </View>
@@ -98,8 +98,8 @@ module.exports = createReactClass({
 
   },
   
-  onChangeText(value) {
-    this._onChange(value);
+  onChangeText() {
+    this._onChange(this.refs.maskedInput.getRawValue());
   },
 
   onFocus() {
